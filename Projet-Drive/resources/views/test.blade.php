@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AWS S3 - Page de Test de Connexion</title>
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,7 +25,6 @@
 <body class="min-h-full flex flex-col bg-slate-50/50 py-10 px-4 sm:px-6 lg:px-8">
 
     <div class="max-w-4xl mx-auto w-full">
-        <!-- Header -->
         <header class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-center gap-3">
                 <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-600 text-white shadow-lg shadow-orange-500/20">
@@ -60,7 +57,6 @@
             </div>
         </header>
 
-        <!-- S3 Bucket Configuration Info Card -->
         <section class="mb-6 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
             <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3">Informations de configuration S3</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -87,7 +83,6 @@
             </div>
         </section>
 
-        <!-- Error Card if AWS connection fails -->
         @if($error)
             <div class="mb-6 rounded-2xl border border-red-200 bg-red-50/50 p-6 text-red-800 shadow-sm">
                 <div class="flex items-start gap-4">
@@ -108,7 +103,6 @@
             </div>
         @endif
 
-        <!-- S3 Files Section -->
         <main class="rounded-2xl border border-slate-200/80 bg-white overflow-hidden shadow-sm">
             <div class="border-b border-slate-200/60 bg-slate-50 px-6 py-4 flex items-center justify-between">
                 <div>
@@ -141,7 +135,6 @@
                                 <tr class="hover:bg-slate-50/50 transition-colors group">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center gap-3">
-                                            <!-- File Icon Badge based on ext -->
                                             <div class="h-9 w-9 shrink-0 rounded-lg flex items-center justify-center {{ $dirName === 'Racine' ? 'bg-orange-50 text-orange-600' : 'bg-slate-100 text-slate-600' }}">
                                                 @if(in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif', 'svg']))
                                                     <svg class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
