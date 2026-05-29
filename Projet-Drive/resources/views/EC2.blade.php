@@ -41,6 +41,49 @@
             </div>
         @endif
 
+        @if($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6 text-sm">
+                <ul class="list-disc list-inside font-semibold">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <div class="mb-8 p-6 bg-slate-50 border border-gray-200 rounded-xl">
+            <h2 class="text-lg font-bold text-gray-800 mb-4">Créer une nouvelle instance EC2</h2>
+            <form action="{{ route('ec2.create') }}" method="POST">
+                @csrf
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label for="name" class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Nom de l'instance</label>
+                        <input type="text" name="name" id="name" placeholder="ex: mon-serveur-test" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-500 bg-white text-sm" max="50">
+                    </div>
+                    <div>
+                        <label for="image_id" class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Image AMI (Système)</label>
+                        <select name="image_id" id="image_id" required class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-500 bg-white text-sm">
+                            <option value="ami-0be40a46b4111e7f5">Ubuntu Server 22.04 LTS (ami-0be40a46b4111e7f5)</option>
+                            <option value="ami-0b8b0dfb5952f0d4a">Amazon Linux 2023 (ami-0b8b0dfb5952f0d4a)</option>
+                            <option value="ami-03dbc12aeff16b2d4">Debian 13 (ami-03dbc12aeff16b2d4)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Type d'instance</label>
+                        <input type="text" value="t2.micro" disabled class="w-full px-3 py-2 border border-gray-200 rounded bg-gray-100 text-gray-500 text-sm font-mono">
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 font-semibold transition text-sm flex items-center justify-center gap-1.5 shadow-sm h-[38px]">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            Lancer l'instance
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white border border-gray-200 rounded">
                 <thead>

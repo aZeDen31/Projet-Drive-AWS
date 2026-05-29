@@ -132,8 +132,52 @@
         }
     }
 
-    public function createInstance(){
+    public function createInstance(Request $request){
+        $request->validate([
+            'image_id' => 'required|in:ami-0be40a46b4111e7f5,ami-0b8b0dfb5952f0d4a,ami-03dbc12aeff16b2d4',
+            'name'     => 'nullable|string|max:50',
+        ]);
 
+        try {
+            $ec2 = new Ec2Client([
+                'region'      => config('filesystems.disks.s3.region'),
+                'version'     => 'latest',
+                'credentials' => [
+                    'key'    => config('filesystems.disks.s3.key'),
+                    'secret' => config('filesystems.disks.s3.secret'),
+                ],
+                'http' => [
+                    'verify' => config('filesystems.disks.s3.http.verify', true),
+                ],
+            ]);
+
+            $params = [
+                'ImageId'      => $request->image_id,
+                'InstanceType' => 't2.micro',
+                'MinCount'     => 1,
+                'MaxCount'     => 1,
+            ];
+
+            if ($request->filled('name')) {
+                $params['TagSpecifications'] = [
+                    [
+                        'ResourceType' => 'instance',
+                        'Tags' => [
+                            [
+                                'Key'   => 'Name',
+                                'Value' => $request->name,
+                            ],
+                        ],
+                    ],
+                ];
+            }
+
+            $ec2->runInstances($params);
+
+            return back()->with('success', 'Instance créée avec succès !');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erreur lors de la création de l\'instance : ' . $e->getMessage());
+        }
     }
 
     public function deleteInstance($instanceId){
