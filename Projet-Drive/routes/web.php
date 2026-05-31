@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\S3DriveController;
 use App\Http\Controllers\EC2Controller;
+use App\Http\Controllers\VPCController;
 
 Route::get('/', [S3DriveController::class, 'list'])->name('drive.list');
 
@@ -38,4 +39,19 @@ Route::post('/ec2/start/{instanceId}', [EC2Controller::class, 'startInstance'])-
 
 // Route pour créer une instance EC2
 Route::post('/ec2/create', [EC2Controller::class, 'createInstance'])->name('ec2.create');
+
+// Page pour lister les VPCs
+Route::get('/vpc', [VPCController::class, 'listVpcs'])->name('vpc.list');
+
+// Route pour créer un VPC
+Route::post('/vpc/create', [VPCController::class, 'createVpc'])->name('vpc.create');
+
+// Route pour supprimer un VPC
+Route::delete('/vpc/delete/{vpcId}', [VPCController::class, 'deleteVpc'])->name('vpc.delete');
+
+// Route pour créer un sous-réseau (Subnet)
+Route::post('/vpc/subnet/create', [VPCController::class, 'createSubnet'])->name('vpc.subnet.create');
+
+// Route pour supprimer un sous-réseau (Subnet)
+Route::delete('/vpc/subnet/delete/{subnetId}', [VPCController::class, 'deleteSubnet'])->name('vpc.subnet.delete');
 
